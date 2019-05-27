@@ -5,7 +5,8 @@
     br
     .full-row._between
         figure.full-col2
-            img(src="~static/author/person.jpg")
+            //- img(src="~static/author/person.jpg")
+            img.logo(src="~static/author/moubee.jpg")
         .author.full-col2
             dl
                 dt 林政逸
