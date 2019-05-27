@@ -28,7 +28,7 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  router: { base: '/lin_caligraphy/' },
+  router: { base: '/lin_calligraphy/' },
   /*
   ** Customize the progress-bar color
   */
