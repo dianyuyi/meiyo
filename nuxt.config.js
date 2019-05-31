@@ -13,6 +13,7 @@ module.exports = {
       '~/plugins/vue-headroom',
     ]
   },
+  router: { base: '/meiyo/' },
 
   /*
   ** Headers of the page
