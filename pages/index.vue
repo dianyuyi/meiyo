@@ -8,35 +8,49 @@
   #app
     headroom
       header.header
-        h1.logo-mb-space
+        div.logo-mb-space
           nuxt-link.logo-mb(to="/Home")
+        .navbar
+          ul.nav-left
+            li
+              nuxt-link(to="/Works") 書籍
+            li
+              nuxt-link(to="/Works") 雜誌
+            li
+              nuxt-link(to="/Works") 漫畫
+            li
+              nuxt-link(to="/Works") 電子書
+            li
+              nuxt-link(to="/Works") 影音專區
+          ul.nav-right
+            li
+              nuxt-link(to="/Home") 登入
+            li
+              nuxt-link(to="/Home") 會員中心 
+                i.fa.fa-info-circle
       Slide(right noOverlay width="200")
         nuxt-link(to="/Home")
           span 回首頁
-        nuxt-link(to="/Intro")
-          span 作者簡介
         nuxt-link(to="/Works")
-          span 作品概覽
-        nuxt-link(to="/News")
-          span 近期活動
-        nuxt-link(to="/Contact")
-          span 聯絡方式
-    .leftnav
-      .web-logo
-        nuxt-link.logo(to="/Home")
-      ul.linklist
-        li.link-item
-          nuxt-link(to="/Intro") 作者簡介
-        li.link-item
-          nuxt-link(to="/Works") 作品概覽
-        li.link-item
-          nuxt-link(to="News") 近期活動
-        li.link-item
-          nuxt-link(to="/Contact") 聯絡方式
-      p.copyright (C)Cheng-Yi Lin All rights Reserved.
+          span 書籍
+        nuxt-link(to="/Works")
+          span 雜誌
+        nuxt-link(to="/Works")
+          span 漫畫
+        nuxt-link(to="/Works")
+          span 電子書
+        nuxt-link(to="/Works")
+          span 影音專區
+        nuxt-link(to="/Works")
+          span 登入
+        nuxt-link(to="/Works")
+          span 會員中心
+    
     .mainblock
     transition(name="fade" mode="out-in")
       nuxt-child(:key="$route.params.id")
+    
+
 
 </template>
 
@@ -47,12 +61,15 @@ import{ Slide } from 'vue-burger-menu'
 export default {
   name: 'App',
   components: {
-    headroom, Slide
+    headroom, 
+    Slide,
   },
 }
 </script>
 
 <style lang="sass">
+
+@import "swiper/dist/css/swiper.css"
 @import url(https://fonts.googleapis.com/earlyaccess/cwtexming.css)
 
 html, body, div, span, object, iframe,
@@ -88,41 +105,79 @@ body
   text-align: center
   margin: 0px
   padding: 0px
-
-// View inner
-.mainblock
-  padding: 46px 0 0px 200px
-@media screen and (max-width: 1050px)
-  .mainblock
-    padding: 46px 0 0px 0px
-
+  
 // Header
+.headroom
+  background-color: #f8f8f8
+
 .header
-  opacity: 0
+  opacity: 1
   line-height: 60px
-  padding-left: 200px
-  background-color: rgba(255, 255, 255, 0.94)
-  text-align: right
+  padding: 0px 20px
+  margin: 0 auto
+  max-width: 1252px
+  background-color: #f8f8f8
+  border-bottom: solid 2px #eee
+  // background-color: rgba(255, 255, 255, 0.94)
+  text-align: left
+  display: flex
   .logo-mb-space
-    opacity: 0
     width: 240px
-    margin: 0 auto
+    // margin: 0 auto
     .logo-mb
       display: block
-      height: 46px
-      background-image: url(~static/home-img/logo-mb.svg)
+      height: 60px
+      background-color: #222
+      background-image: url(~static/meiyou_w.png)
+      background-size: 80%
+      background-repeat: no-repeat
+      background-position: center center
       text-align: left
+
+  .navbar
+    display: flex
+    width: 100%
+    justify-content: space-around
+    ul
+      display: flex
+      list-style: none
+      li
+        font-weight: 900
+        color: #222
+        margin-left: 20px
+        transition-duration: 0.2s
+        a
+          text-decoration: none
+          color: #222
+        &:hover
+          transform: translate(0px,2px)
+          cursor: pointer
+          opacity: 0.8
+      &.nav-left
+        li > a
+          padding-right: 20px
+          position: relative
+          &:after
+            content: "▼"
+            position: absolute
+
+        
 @media screen and (max-width: 1050px)
   .header
     opacity: 1
     padding-left: 0
-    height: 46px
+    height: 60px
+    display: block
     .logo-mb-space
       opacity: 1
+    .navbar
+      opacity: 0
+      display: none
 @media screen and (max-width: 500px)
   .header
     .logo-mb-space
-        margin: 0 auto 0 5px
+        // margin: 0 auto 0 5px
+
 
 // Mobile-nav
 .bm-burger-button
@@ -206,26 +261,6 @@ body
     opacity: 0
     
 
-// Navbar
-.leftnav
-  z-index: 99
-  position: fixed
-  height: 100vh
-  padding: 0px
-  width: 200px
-  flex: 0 0 120px
-  background: #fff
-  border-right: 1px solid #eee
-  align-content: center
-@media screen and (max-width: 1050px)
-  .leftnav
-    width: 100%
-    height: 0
-    min-height: 0
-    opacity: 0
-    overflow: hidden
-    pointer-events: none
-
 
 // Index logo
 .web-logo
@@ -239,7 +274,7 @@ body
     height: 250px
     width: 100%
     opacity: 1
-    background-image: url(~static/home-img/logo-tmp.svg)
+    background-image: url(~static/meiyou.png)
     background-size: contain
     background-repeat: no-repeat
     background-position: center bottom
@@ -275,134 +310,5 @@ body
       font-size: 0.875em
       text-decoration: none
       align-items: center
-    
-.copyright
-  position: absolute
-  bottom: 15px
-  left: 0
-  right: 0
-  font-size: 0.3em
-  text-align: center
-  color: #b2a197
-    
-
-// Grid box
-.outer-box
-  width: 100%
-  max-width: 900px
-  margin: 0 auto
-  padding: 46px 0 30px 0px
-.full-row
-  display: -webkit-box
-  display: -ms-flexbox
-  display: flex
-  -webkit-box-orient: horizontal
-  -webkit-box-direction: normal
-  -ms-flex-flow: row wrap
-  flex-flow: row wrap
-  margin-top: 20px
-  &._between
-    -webkit-box-pack: justify
-    -ms-flex-pack: justify
-    justify-content: space-between
-  &._around
-    -webkit-box-pack: justify
-    -ms-flex-pack: justify
-    justify-content: space-around
-  &._reverse
-    -webkit-box-orient: horizontal
-    -webkit-box-direction: reverse
-    -ms-flex-direction: row-reverse
-    flex-direction: row-reverse
-.full-col2
-  width: 48.14815%
-  overflow: hidden
-  .full-col2 img
-    max-width: 100%
-    height: auto
-@media screen and (max-width: 1050px)
-  .outer-box
-    padding: 106px 5% 30px 5%
-@media screen and (max-width: 1023px)
-  .outer-box
-    max-width: 700px
-@media screen and (max-width: 500px)
-  .outer-box
-    width: 100%
-    max-width: 750px
-  .full-row
-    -webkit-box-orient: vertical
-    -webkit-box-direction: normal
-    -ms-flex-flow: wrap
-    flex-flow: wrap
-  .full-col2
-    width: 100%
-    &:not(:first-child)
-      margin-top: 1.5em
-
-// Page-title set
-h1.section-title
-  font-weight: 500
-  margin-bottom: 0
-  position: relative
-  font-size: 1.75em
-  letter-spacing: 0.1em
-  &:after
-    content: ""
-    position: absolute
-    bottom: 0
-    left: 50%
-    transform: translateX(-50%)
-    width: 90%
-    height: 1px
-    background: #eee
-p.en-title
-  position: relative
-  text-align: center
-  margin-top: 0.25em
-  padding-bottom: 4em
-  font-size: 1em
-  font-weight: 500
-  &:after
-    content: ""
-    position: absolute
-    left: 50%
-    bottom: 1em
-    transform: translateX(-50%) 
-    width: 60px
-    height: 2px
-    background: #eee
-hr
-    opacity: 0.2
-    margin: 30px 0 30px 0
-
-
-// Page out-in transition
-.fade-enter-active,
-.fade-leave-active,
-  transition-duration: 0.5s
-  transition-property: height, opacity, transform
-  transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1)
-  overflow: hidden
-.fade-enter
-  opacity: 0
-  transform: translate(2em, 0)
-.fade-leave-active
-  opacity: 0
-  transform: translate(-2em, 0)
-
-// Page content slide
-.slide-enter-active,
-.slide-leave-active,
-  transition-duration: 0.5s
-  transition-property: height, opacity, transform
-  transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1)
-  overflow: hidden
-.slide-enter
-  opacity: 0
-  transform: translate(0, 1em)
-.slide-leave-active
-  opacity: 0
-  transform: translate(0, 1em)
 
 </style>

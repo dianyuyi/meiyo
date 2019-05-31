@@ -1,0 +1,84 @@
+
+$color_main: #f7f0dc
+
+// Mobile-nav
+.bm-burger-button
+  position: fixed
+  width: 24px
+  height: 18px
+  left: 20px
+  top: 16px
+  cursor: pointer
+@media screen and (min-width: 1050px)
+  .bm-burger-button
+    // display: none
+
+.bm-burger-bars
+  background-color: #534741
+
+.line-style
+  position: absolute
+  height: 10%
+  left: 0
+  right: 0
+
+.cross-style
+  position: absolute
+  top: 24px
+  right: 40px
+  cursor: pointer
+
+    
+.bm-cross
+  background: #534741
+
+.bm-cross-button
+  height: 30px
+  width: 30px
+
+.bm-menu
+  height: 100vh!important /* 100% Full-height */
+  width: 0 /* 0 width - change this with JavaScript */
+  position: fixed /* Stay in place */
+  z-index: 1000 /* Stay on top */
+  top: 0
+  left: 0
+  background-color: $color_main!important
+//   background-image: url(~static/paper_bg.png)
+  background-size: 200% 100%
+  background-position: left -15px
+  background-repeat: no-repeat
+  overflow-x: hidden /* Disable horizontal scroll */
+  padding-top: 40px /* Place content 60px from the top */
+  transition: 0.5s /*0.5 second transition effect to slide in the sidenav*/
+
+.bm-overlay
+  background: rgba(0, 0, 0, 0.3)
+
+.bm-item-list
+  color: #534741
+  margin-left: 25%
+  font-size: 1rem
+
+.bm-item-list > *
+  display: flex
+  text-decoration: none
+  min-width: 120px
+  padding: 1em 0 0.25em 0
+  color: #534741!important
+  transition: .5s
+  &:hover
+    transform: translate(10px,-2px)
+    border-bottom: 2px dotted #534741
+    & > span:after
+      transition: .5s
+      opacity: 1
+
+.bm-item-list > * > span
+  margin-left: 10px
+  font-weight: 500
+  color: #534741!important
+  &:after
+    content: "➤"
+    padding-left: 0.5em
+    opacity: 0

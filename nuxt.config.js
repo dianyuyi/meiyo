@@ -3,7 +3,7 @@ const pkg = require('./package')
 module.exports = {
   mode: 'spa',
   css: [
-    'assets/main.sass'
+    '~assets/scss/main.sass'
   ],
   build: {
     vendor: [
@@ -34,11 +34,6 @@ module.exports = {
   */
   loading: { color: '#fff' },
 
-  /*
-  ** Global CSS
-  */
-  css: [
-  ],
 
   /*
   ** Plugins to load before mounting the App

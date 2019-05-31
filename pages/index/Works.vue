@@ -1,193 +1,290 @@
 <template lang="pug">
-.outer-box
-    h1.section-title 作品概覽
-    p.en-title Calligraphy works
-    .full-row._around
-        gallery(:images="workslist" :index="index" @close="index = null")
-        .image(v-for="(image, imageIndex) in workslist" :key="imageIndex" @click="index = imageIndex" :style="{ backgroundImage: 'url(' + `${image.href}` + ')', width: '150px', height: '150px' }")
+.rightblock
+	.outer-box
+		.full-row._around
+			.depart-col-30
+				.type-box(v-for="type in typesList")
+					.panel-title
+						p {{ type.typename}}
+					.panel-child(v-for="list in type.childtype")
+						p {{list.name}}
+
+			.depart-col-70
+				h1.section-title 新書上架
+				p.en-title New Books
+				.full-row._between
+					figure.full-col4.booksbox(v-for="book in booksList")
+						//- a.booklink(:href="book.link",target="_blank")
+						img.topic(:src="require(`~/assets/${book.img}`)")
+						h3.booktitle {{ book.title }}
+						//- p.booktext {{ book.description}}
+						span.price-default(v-if="book.discount<100") $ {{ book.price }}
+						p.price-discount(:class="{ red: book.discount<100 }") $ {{ parseInt( book.price*(book.discount/100) ) }}
+						.discount-tip(v-if="book.discount<100")
+							p {{ book.discount }}折
+
+	Footer
+
 </template>
 
-
 <script>
-import VueGallery from 'vue-gallery';
+import Footer from '@/components/footer'
+
 export default {
-    data(){
-        return {
-            workslist: [
-            {
-                title: '從容無為',
-                description: '70x135cm 四尺對開橫幅',
-                href: require(`~/assets/works/01.jpg`)
-            },
-            {
-                title: '啼鳥雲山靜，落花溪水香',
-                description: '135x35x2cm 條幅對聯',
-                href: require(`~/assets/works/02.jpg`)
-            },
-            {
-                title: '行書錄李白詩二首橫幅-局部一',
-                description: '局部放大',
-                href: require(`~/assets/works/03.jpg`)
-            },
-            {
-                title: '行書錄李白詩二首橫幅-局部二',
-                description: '局部放大',
-                href: require(`~/assets/works/04.jpg`)
-            },
-            {
-                title: '行書錄李白詩二首橫幅-局部三',
-                description: '局部放大',
-                href: require(`~/assets/works/05.jpg`)
-            },
-            {
-                title: '行書錄李白詩二首橫幅',
-                description: '135x35cm 四尺對開橫幅',
-                href: require(`~/assets/works/06.jpg`)
-            },
-            {
-                title: '鏤月裁雲',
-                description: '135x35cm 四尺對開條幅',
-                href: require(`~/assets/works/07.jpg`)
-            },
-            {
-                title: '見素抱樸',
-                description: '35x135cm 四尺對開橫幅',
-                href: require(`~/assets/works/08.jpg`)
-            },
-            {
-                title: '施潤章山行',
-                description: '70x135cm 四尺全開中堂',
-                href: require(`~/assets/works/09.jpg`)
-            },
-            {
-                title: '山行',
-                description: '抽象水墨',
-                href: require(`~/assets/works/10.jpg`)
-            },
-            {
-                title: '鶴鳴九皋',
-                description: '35x135cm 四尺對開橫幅',
-                href: require(`~/assets/works/11.jpg`)
-            },
-            {
-                title: '鴻鵠凌虛',
-                description: '35x135cm 四尺對開橫幅',
-                href: require(`~/assets/works/12.jpg`)
-            },
-            {
-                title: '康有為詩句草書、行書條幅',
-                description: '135x35x2cm 四尺對開條幅',
-                href: require(`~/assets/works/13.jpg`)
-            },
-            {
-                title: '小品三件-幽懷得春氣、脩竹引清風、純篤',
-                description: '70cm 行書、魏碑、隸書小品',
-                href: require(`~/assets/works/14.jpg`)
-            },
-            {
-                title: '幽懷、修竹行書五言聯',
-                description: '135x35x2cm 四尺對開對聯',
-                href: require(`~/assets/works/15.jpg`)
-            },
-            {
-                title: '落花舞秋',
-                description: '135x35cm 四尺對開條幅',
-                href: require(`~/assets/works/16.jpg`)
-            },
-            {
-                title: '春逐鳥聲開-現代書藝行書',
-                description: '135x35cm 四尺對開條幅',
-                href: require(`~/assets/works/17.jpg`)
-            },
-            {
-                title: '守卓禪師七言律詩',
-                description: '38x26.5cm 行書小品',
-                href: require(`~/assets/works/18.jpg`)
-            },
-            {
-                title: '黃龍道震禪師禪偈',
-                description: '135x35cm 四尺對開四條屏',
-                href: require(`~/assets/works/19.jpg`)
-            },
-            {
-                title: '茶韻',
-                description: '19.5x13.5cm(畫心部分) 行書小品',
-                href: require(`~/assets/works/20.jpg`)
-            },
-            {
-                title: '吐言落筆魏碑五言聯',
-                description: '135x35x2cm 四尺對開對聯',
-                href: require(`~/assets/works/21.jpg`)
-            },
-            {
-                title: '龍門清遠禪師行書中堂',
-                description: '135x760m 四尺全開中堂(略窄)',
-                href: require(`~/assets/works/22.jpg`)
-            },
-            {
-                title: '魯迅句大字魏碑條幅',
-                description: '135x35cm 四尺對開條幅',
-                href: require(`~/assets/works/23.jpg`)
-            },
-            {
-                title: '李白詩句大字魏碑條幅',
-                description: '135x35cm 四尺對開條幅',
-                href: require(`~/assets/works/24.jpg`)
-            },
-            {
-                title: '閑來喫茶',
-                description: '小品橫幅',
-                href: require(`~/assets/works/25.jpg`)
-            },
-            {
-                title: '水墨白荷',
-                description: '荷葉羅裙一色裁，芙蓉向臉南邊開。亂入池中看不見，聞歌始覺有人來。',
-                href: require(`~/assets/works/26.jpg`)
-            },
-            {
-                title: '曲江春望-魏碑橫幅',
-                description: '55x135cm 橫幅',
-                href: require(`~/assets/works/27.jpg`)
-            },
-            {
-                title: '曲江春望-草書條幅',
-                description: '135x35cm 四尺對開條幅',
-                href: require(`~/assets/works/28.jpg`)
-            },
-            {
-                title: '東坡詩暨李白詩行書中堂',
-                description: '135x70cm 四尺全開中堂',
-                href: require(`~/assets/works/29.jpg`)
-            },
-            {
-                title: '鶴沖天',
-                description: '70cm 小品',
-                href: require(`~/assets/works/30.jpg`)
-            }
-            ],
-            index: null
-        }
-    },
-    components:{
-        'gallery': VueGallery
-    }
+	components: {
+		Footer
+	},
+	data() {
+		return {
+			typesList: 
+				[
+					{
+						typename: '書籍',
+						childtype: [
+							{name: '中文書'},
+							{name: '外文書'}
+						],
+					},
+					{
+						typename: '雜誌',
+						childtype: [
+							{name: '中文雜誌'},
+							{name: '日文MOOK'},
+							{name: '歐美雜誌'}
+						],
+					},
+					{
+						typename: '雜誌',
+						childtype: [
+							{name: '中文書'},
+							{name: '外文書'}
+						],
+					},
+					{
+						typename: '電子書',
+						childtype: [
+							{name: '電子書'},
+							{name: '電子雜誌'}
+						],
+					},
+					{
+						typename: '影音專區',
+						childtype: [
+							{name: '唱片CD'},
+							{name: '影音DVD'}
+						],
+					},
+				],
+			booksList: 
+				[
+					{
+						title: '詭影',
+						description: '鬼故事天王又一全新力作！夜深人靜時，是否也曾有竊竊夜語在你耳畔響起⋯⋯',
+						author: '陳為民',
+						img: 'book/poster/01.jpg',
+						discount: 79,
+						price: 230
+					},
+					{
+						title: '書法案上有隻喵',
+						description: '誰說喵爪就握不了筆？且看喵爪如何大筆一揮，寫出精采書藝！',
+						author: '枚酉',
+						img: 'book/poster/02.jpg',
+						discount: 79,
+						price: 230
+					},
+					{
+						title: '薄雨',
+						description: '誰說喵爪就握不了筆？且看喵爪如何大筆一揮，寫出精采書藝！',
+						author: '枚酉',
+						img: 'book/poster/03.jpg',
+						discount: 100,
+						price: 230
+					},
+					{
+						title: '籠內的獅子',
+						description: '誰說喵爪就握不了筆？且看喵爪如何大筆一揮，寫出精采書藝！',
+						author: '枚酉',
+						img: 'book/poster/04.jpg',
+						discount: 88,
+						price: 230
+					},
+					{
+						title: '粗食潮流',
+						description: '誰說喵爪就握不了筆？且看喵爪如何大筆一揮，寫出精采書藝！',
+						author: '枚酉',
+						img: 'book/poster/05.jpg',
+						discount: 79,
+						price: 230
+					},
+					{
+						title: '業之扉-KARMA-',
+						description: '誰說喵爪就握不了筆？且看喵爪如何大筆一揮，寫出精采書藝！',
+						author: '枚酉',
+						img: 'book/poster/06.jpg',
+						discount: 100,
+						price: 230
+					},
+					{
+						title: '機翼下的薄螢：航道區域生態調查手札',
+						description: '誰說喵爪就握不了筆？且看喵爪如何大筆一揮，寫出精采書藝！',
+						author: '枚酉',
+						img: 'book/poster/07.png',
+						discount: 88,
+						price: 230
+					},
+					{
+						title: '匯聚之絲',
+						description: '誰說喵爪就握不了筆？且看喵爪如何大筆一揮，寫出精采書藝！',
+						author: '枚酉',
+						img: 'book/poster/08.png',
+						discount: 79,
+						price: 230
+					},
+					// {
+					// 	title: '書法初學者易犯的謬誤大哉問',
+					// 	description: '誰說喵爪就握不了筆？且看喵爪如何大筆一揮，寫出精采書藝！',
+					// 	author: '枚酉',
+					// 	img: 'book/poster/09.png',
+					// 	discount: 79,
+					// 	price: 230
+					// },
+				]
+		}
+	},
+	computed: {
+		swiper() {
+			return this.$refs.mySwiper.swiper
+		}
+	}
+
 }
 </script>
 
 <style lang="sass">
-.image
-    display: inline-flex
-    background-size: cover
-    background-repeat: no-repeat
-    background-position: center center
-    background-color: #ebebeb
-    border: 1px solid #ebebeb
-    margin: 5px
+.type-box
+	display: flex
+	flex-direction: column
+	justify-content: center
+	align-items: flex-start
+	.panel-title
+		font-size: 1.25rem
+		width: 100%
+		text-align: left
+		background-color: #f8f8f8
+		p
+			padding: 1rem 0.5rem
 
-.blueimp-gallery > .description
-    text-shadow: 0px 0px 2px #000
-    font-weight: 700
-    top: 40px!important
-    opacity: 0.8
+	.panel-child
+		font-size: 1rem
+		width: 100%
+		text-align: left
+		border-bottom: solid 1px #eee
+		&:last-child
+			border-bottom: none
+		p
+			padding: 0.25rem 1rem
+			transition: 0.5s
+			&:before
+					content: ""
+					opacity: 0
+					transition: 0.5s
+			&:hover
+				padding-left: 2rem
+				&:before
+					content: "▶"
+					opacity: 1
 
+.booksbox
+	display: flex
+	justify-content: center
+	align-items: center
+	margin-bottom: 2.5em
+	flex-direction: column
+	position: relative
+	height: 320px
+	overflow: hidden
+	transition: 0.5s
+	background-color: #fff
+	> *
+		transition: 0.5s
+	.booktitle,.booktext
+		z-index: 2
+	.booktitle
+		font-size: 1rem
+		opacity: 0.5
+		margin-top: 15px
+	.booktext
+		font-size: 0.875rem
+		opacity: 0
+		width: 0
+		height: 0
+	.topic
+		z-index: 0
+		height: 60%
+		max-width: 100%
+		box-shadow: 3px 2px 20px rgba(black,0.1)
+	.price
+		&-default
+			text-decoration: line-through
+		&-discount
+			&.red
+				color: red
+				font-weight: 900
+	.hot
+		position: absolute
+		left: -50px
+		top: -50px
+		z-index: 3
+		width: 220px
+		height: 30px
+		color: #fff
+		background-color: #ff3321
+		opacity: 1
+		span
+			height: 30px
+			font-size: 1.25rem
+			font-weight: 700
+	.discount-tip
+		position: absolute
+		right: -50px
+		bottom: 70px
+		border-radius: 50% 50% 50% 0
+		padding: 5px 0
+		width: 50px
+		height: 50px
+		background: #ffd263
+		transform: rotate(-45deg)
+
+	&:hover
+		background-color: rgba(255,248,230,0.2)
+		border: solid 1px #eee
+		.booktitle,.booktext
+			opacity: 1
+		.booktitle
+			margin-top: 8px
+			font-size: 1.2rem
+			line-height: 1.1
+		.booktext
+			width: 100%
+		.topic
+			z-index: 2
+			height: 70%
+		.hot
+			transform: rotate(-45deg)
+			top: 40px
+		.discount-tip
+			right: 10px
+			bottom: 10px
+			z-index: 4
+			transform: rotate(45deg)
+			p
+				transform: rotate(-45deg)
+				position: relative
+				top: 10px
+		.price
+			&-default
+				font-size: 0.875rem
+			&-discount
+				font-size: 1.25rem
 </style>
